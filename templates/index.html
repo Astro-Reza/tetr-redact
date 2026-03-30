@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TETRIS × PRETEXT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon/tetrr.png') }}">
+</head>
+
+<body>
+    <div class="scanlines"></div>
+
+    <!-- BURGER MENU -->
+    <button class="burger" id="burgerBtn" title="Settings">
+        <span></span><span></span><span></span>
+    </button>
+
+    <!-- HANDLING SETTINGS PANEL -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="sp-header">
+            <div class="sp-title">Handling</div>
+            <button class="sp-close" id="settingsClose">✕</button>
+        </div>
+        <div class="sp-row">
+            <div class="sp-label">DAS <span class="sp-hint">Delayed Auto Shift</span></div>
+            <div class="sp-control">
+                <input type="range" id="sliderDAS" min="0" max="500" step="1" value="300">
+                <span class="sp-val" id="valDAS">300 ms</span>
+            </div>
+        </div>
+        <div class="sp-row">
+            <div class="sp-label">ARR <span class="sp-hint">Auto Repeat Rate</span></div>
+            <div class="sp-control">
+                <input type="range" id="sliderARR" min="0" max="200" step="1" value="80">
+                <span class="sp-val" id="valARR">80 ms</span>
+            </div>
+        </div>
+        <div class="sp-row">
+            <div class="sp-label">DCD <span class="sp-hint">DAS Cut Delay</span></div>
+            <div class="sp-control">
+                <input type="range" id="sliderDCD" min="0" max="100" step="1" value="12">
+                <span class="sp-val" id="valDCD">12 ms</span>
+            </div>
+        </div>
+        <div class="sp-row">
+            <div class="sp-label">SDF <span class="sp-hint">Soft Drop Factor</span></div>
+            <div class="sp-control">
+                <input type="range" id="sliderSDF" min="1" max="100" step="1" value="35">
+                <span class="sp-val" id="valSDF">35×</span>
+            </div>
+        </div>
+    </div>
+    <div class="wrap">
+
+        <!-- LEFT -->
+        <div class="panel lp">
+            <div class="inner-box">
+                <div class="plabel">Hold</div>
+                <div class="mini-wrap"><canvas class="mini" id="hc" width="80" height="64"></canvas></div>
+            </div>
+            <div class="inner-box">
+                <div class="stat">
+                    <div class="slabel">Score</div>
+                    <div class="sval" id="sv">0</div>
+                </div>
+                <div class="stat">
+                    <div class="slabel">Best</div>
+                    <div class="sval" id="bv">0</div>
+                </div>
+                <div class="stat">
+                    <div class="slabel">Level</div>
+                    <div class="sval" id="lv">1</div>
+                    <div class="lvbar-wrap">
+                        <div class="lvbar" id="lb" style="width:0%"></div>
+                    </div>
+                </div>
+                <div class="stat primary">
+                    <div class="slabel">Redacted Lines</div>
+                    <div class="sval" id="lnv">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOARD -->
+        <div class="board-col">
+            <div class="gtitle">TETR-REDACT <span>× pretext</span></div>
+            <div style="position:relative;">
+                <canvas id="gc" width="300" height="600"></canvas>
+                <div class="lib-badge">TEXT LAYOUT BY <span>@chenglou/pretext</span></div>
+                <div id="loading-msg">
+                    <div>LOADING PRETEXT</div>
+                    <div class="dot-anim">■ ■ ■</div>
+                </div>
+                <div class="ov h" id="sov">
+                    <div class="ovt">TETRIS</div>
+                    <div class="ovs">text flows around every block</div>
+                    <button class="btn" id="startBtn">START</button>
+                </div>
+                <div class="ov h" id="pov">
+                    <div class="ovt">PAUSED</div>
+                    <div class="ovs">game suspended</div>
+                    <button class="btn" id="resumeBtn">RESUME</button>
+                    <button class="btn sec" id="forfeitBtn">FORFEIT</button>
+                </div>
+                <div class="ov h" id="gov">
+                    <div class="ovt go">GAME OVER</div>
+                    <div class="ovs">final score</div>
+                    <div class="ovscore" id="fs">0</div>
+                    <button class="btn" id="retryBtn">RETRY [A]</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="panel rp">
+            <div class="next-list">
+                <div class="plabel">Next</div>
+                <div class="nitem"><canvas class="mini" id="n0" width="80" height="48"></canvas></div>
+                <div class="nitem"><canvas class="mini" id="n1" width="72" height="44"></canvas></div>
+                <div class="nitem"><canvas class="mini" id="n2" width="64" height="40"></canvas></div>
+            </div>
+            <div class="ctrl-box">
+                <div class="plabel">Controls</div>
+                <div class="ci"><span class="cl">Move</span><span class="ck">← →</span></div>
+                <div class="ci"><span class="cl">Soft Drop</span><span class="ck">↓</span></div>
+                <div class="ci"><span class="cl">Hard Drop</span><span class="ck">V</span></div>
+                <div class="ci"><span class="cl">Rotate CW</span><span class="ck">↑</span></div>
+                <div class="ci"><span class="cl">Rotate CCW</span><span class="ck">C</span></div>
+                <div class="ci"><span class="cl">Rotate 180</span><span class="ck">X</span></div>
+                <div class="ci"><span class="cl">Hold</span><span class="ck">Z</span></div>
+                <div class="ci"><span class="cl">Retry</span><span class="ck">A</span></div>
+                <div class="ci"><span class="cl">Pause/Quit</span><span class="ck">ESC</span></div>
+            </div>
+        </div>
+
+        <!-- FAR RIGHT -->
+        <div class="panel rp" style="width: 200px;">
+            <div class="ctrl-box" style="display:flex; flex-direction:column; height: 100%;">
+                <div class="plabel">Custom Text</div>
+                <div class="slabel" style="margin-bottom:10px; text-transform:none; opacity:0.8;">Enter document text to
+                    be redacted:</div>
+                <textarea id="customText" placeholder="Start typing here..."
+                    style="flex:1; min-height: 250px; resize:none; background:var(--bg); color:var(--text); border:1px solid var(--border); padding:10px; font-family:'Geologica', sans-serif; font-size:10px; line-height:1.5; outline:none; margin-bottom: 8px;"></textarea>
+                <button class="btn" id="applyTextBtn" style="width:100%; margin:0; padding:10px;">APPLY TEXT</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Must be type="module" for ESM imports and top-level await -->
+    <script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+
+</html>

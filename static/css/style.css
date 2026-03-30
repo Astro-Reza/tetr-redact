@@ -1,0 +1,511 @@
+/* ══════════════════════════════════════════════════════════════
+   TETRIS × PRETEXT  —  style.css
+   Palette: warm amber base (#FFB061), dark parchment bg
+   Typeface: Geologica (editorial, not game-ish)
+   ══════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg:      #0f0d0b;      /* warm near-black */
+  --panel:   #161310;      /* dark warm panel */
+  --border:  #2c2218;      /* warm dark border */
+  --surface: #0c0a08;      /* deepest surface for inner boxes */
+  --accent:  #FFB061;      /* amber base */
+  --accent2: #e07060;      /* muted terracotta for game over */
+  --accent3: #8fb87a;      /* muted sage for level bar */
+  --text:    #c9b89e;      /* warm off-white */
+  --dim:     #604e38;      /* warm mid-brown for labels */
+  --subtle:  #241c14;      /* very subtle warm tint */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Geologica', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Removed scanlines — too game-ish. Keeping a very faint warm noise instead. */
+.scanlines { display: none; }
+
+/* ── Layout ── */
+.wrap {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.lp, .rp {
+  width: 152px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+}
+
+/* ── Labels ── */
+.plabel {
+  font-family: 'Geologica', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+/* ── Inner boxes ── */
+.inner-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 9px;
+}
+
+.mini-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+}
+
+canvas.mini { image-rendering: pixelated; }
+
+/* ── Stats ── */
+.stat { margin-bottom: 10px; }
+.stat:last-child { margin-bottom: 0; }
+
+.slabel {
+  font-family: 'Geologica', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.sval {
+  font-family: 'Geologica', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.stat.primary {
+  margin-top: 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 10px;
+}
+
+.stat.primary .slabel {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+.stat.primary .sval {
+  font-size: 36px;
+  color: var(--text);
+  margin-top: 2px;
+}
+
+.lvbar-wrap {
+  margin-top: 4px;
+  height: 2px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.lvbar {
+  height: 100%;
+  background: var(--accent3);
+  transition: width .4s ease;
+}
+
+/* ── Board column ── */
+.board-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gtitle {
+  font-family: 'Geologica', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 5px;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+
+.gtitle span {
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: var(--dim);
+  display: block;
+  margin-top: 2px;
+}
+
+#gc {
+  display: block;
+  image-rendering: pixelated;
+  border: 1px solid var(--border);
+  background: #ffffff;
+}
+
+/* ── Right panel — next queue ── */
+.next-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 9px;
+}
+
+.nitem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+}
+
+/* ── Controls box ── */
+.ctrl-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 9px;
+  flex: 1;
+}
+
+.ci {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 9px;
+}
+
+.ci:last-child { margin-bottom: 0; }
+
+.cl {
+  font-family: 'Geologica', sans-serif;
+  font-weight: 300;
+  color: var(--dim);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.ck {
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 1px 6px;
+  font-family: 'Geologica', sans-serif;
+  font-weight: 400;
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* ── Overlays ── */
+.ov {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 13, 11, 0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.ov.h { display: none; }
+
+.ovt {
+  font-family: 'Geologica', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.ovt.go {
+  color: var(--accent2);
+}
+
+.ovs {
+  font-family: 'Geologica', sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.ovscore {
+  font-family: 'Geologica', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+/* ── Buttons ── */
+.btn {
+  font-family: 'Geologica', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 8px 22px;
+  cursor: pointer;
+  margin: 3px;
+  transition: background .15s, color .15s;
+}
+
+.btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn.sec {
+  border-color: var(--dim);
+  color: var(--dim);
+}
+
+.btn.sec:hover {
+  background: var(--dim);
+  color: var(--bg);
+}
+
+/* ── Pretext badge ── */
+.lib-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Geologica', sans-serif;
+  font-size: 7px;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  color: var(--border);
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+.lib-badge span {
+  color: var(--dim);
+}
+
+/* ── Loading screen ── */
+#loading-msg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.97);
+  z-index: 200;
+  backdrop-filter: blur(4px);
+  font-family: 'Geologica', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: #aaa;
+  flex-direction: column;
+  gap: 12px;
+  text-transform: uppercase;
+}
+
+#loading-msg .dot-anim {
+  color: var(--accent);
+  animation: blink 1.2s ease infinite;
+  font-size: 8px;
+  letter-spacing: 6px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.1; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BURGER MENU + SETTINGS PANEL
+   ══════════════════════════════════════════════════════════════ */
+.burger {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 500;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+
+.burger:hover { border-color: var(--accent); }
+
+.burger span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--text);
+  transition: transform .2s, opacity .2s;
+}
+
+.burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Settings panel ── */
+.settings-panel {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 270px;
+  height: 100vh;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  z-index: 490;
+  padding: 60px 18px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: left .25s ease;
+  overflow-y: auto;
+}
+
+.settings-panel.open { left: 0; }
+
+.sp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sp-title {
+  font-family: 'Geologica', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.sp-close {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--dim);
+  font-size: 14px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color .15s, border-color .15s;
+}
+
+.sp-close:hover { color: var(--accent); border-color: var(--accent); }
+
+.sp-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sp-label {
+  font-family: 'Geologica', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 1px;
+}
+
+.sp-hint {
+  font-size: 8px;
+  font-weight: 300;
+  color: var(--dim);
+  letter-spacing: 0;
+  margin-left: 6px;
+}
+
+.sp-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sp-control input[type=range] {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  background: var(--border);
+  outline: none;
+  cursor: pointer;
+}
+
+.sp-control input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+}
+
+.sp-control input[type=range]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+}
+
+.sp-val {
+  font-family: 'Geologica', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--accent);
+  min-width: 48px;
+  text-align: right;
+  letter-spacing: 0.5px;
+}
