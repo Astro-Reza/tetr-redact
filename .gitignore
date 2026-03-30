@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+env/
+venv/
+.venv/
+.env
+
+# Node
+node_modules/
+package-lock.json
+package.json
+
+# Vercel
+.vercel
+
+# Project specific redundant files
+update.html
