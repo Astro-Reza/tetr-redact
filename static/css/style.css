@@ -13,7 +13,7 @@
   --accent2: #e07060;      /* muted terracotta for game over */
   --accent3: #8fb87a;      /* muted sage for level bar */
   --text:    #c9b89e;      /* warm off-white */
-  --dim:     #604e38;      /* warm mid-brown for labels */
+  --dim:     #8b7355;      /* boosted mid-brown for better legibility */
   --subtle:  #241c14;      /* very subtle warm tint */
 }
 
@@ -23,7 +23,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Geologica', sans-serif;
-  font-weight: 300;
+  font-weight: 400; /* Regular weight for better legibility */
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -61,7 +61,7 @@ body {
 .plabel {
   font-family: 'Geologica', sans-serif;
   font-size: 9px;
-  font-weight: 500;
+  font-weight: 600; /* Semi-bold for headings */
   letter-spacing: 1.5px;
   color: var(--dim);
   text-transform: uppercase;
@@ -90,9 +90,7 @@ canvas.mini { image-rendering: pixelated; }
 
 .slabel {
   font-family: 'Geologica', sans-serif;
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 1px;
+  font-weight: 700; /* Heavily bolded labels */
   color: var(--dim);
   text-transform: uppercase;
 }
@@ -118,7 +116,7 @@ canvas.mini { image-rendering: pixelated; }
   color: var(--accent);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.3px;
 }
 
 .stat.primary .sval {
@@ -160,7 +158,7 @@ canvas.mini { image-rendering: pixelated; }
 
 .gtitle span {
   font-size: 9px;
-  font-weight: 300;
+  font-weight: 600;
   letter-spacing: 2px;
   color: var(--dim);
   display: block;
@@ -315,16 +313,16 @@ canvas.mini { image-rendering: pixelated; }
   right: 0;
   text-align: center;
   font-family: 'Geologica', sans-serif;
-  font-size: 7px;
-  font-weight: 300;
-  letter-spacing: 1.5px;
-  color: var(--border);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--dim);
   pointer-events: none;
   text-transform: uppercase;
 }
 
 .lib-badge span {
-  color: var(--dim);
+  color: var(--accent); /* Library name emphasized */
 }
 
 /* ── Loading screen ── */
